@@ -38,11 +38,7 @@
 
     if (self.detailItem) {
         self.contact = (CVContact*)self.detailItem;
-        self.nameData.text = self.contact.name;
-        self.titleData.text = self.contact.title;
-        self.phoneData.text = self.contact.phone;
-        self.emailData.text = self.contact.email;
-        self.twitterIDData.text = self.contact.twitterId;
+        [self loadFromContact];
     }
 }
 

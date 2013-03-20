@@ -17,4 +17,6 @@
 
 @property (strong, nonatomic) CVContactList* contacts;
 
+-(void)storeContacts;
+
 @end

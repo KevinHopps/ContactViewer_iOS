@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "CVContact.h"
 
-@interface CVContactList : NSObject
+@interface CVContactList : NSObject <NSCoding>
 
 +(void)initSingleton;
 
@@ -22,6 +22,10 @@
 -(CVContact*)contactAtIndex:(NSInteger)index;
 
 -(void)addContact:(CVContact*)contact;
+
+-(void)encodeWithCoder:(NSCoder *)aCoder;
+
+-(id)initWithCoder:(NSCoder *)aDecoder;
 
 @property(strong) NSMutableArray* allContacts;
 

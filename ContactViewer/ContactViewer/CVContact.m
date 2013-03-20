@@ -27,4 +27,28 @@
     return self;    
 }
 
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.name forKey:@"name"];
+    [aCoder encodeObject:self.phone forKey:@"phone"];
+    [aCoder encodeObject:self.title forKey:@"title"];
+    [aCoder encodeObject:self.email forKey:@"email"];
+    [aCoder encodeObject:self.twitterId forKey:@"twitterId"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self)
+    {
+        self.name = [aDecoder decodeObjectForKey:@"name"];
+        self.phone = [aDecoder decodeObjectForKey:@"phone"];
+        self.title = [aDecoder decodeObjectForKey:@"title"];
+        self.email = [aDecoder decodeObjectForKey:@"email"];
+        self.twitterId = [aDecoder decodeObjectForKey:@"twitterId"];
+    }
+    
+    return self;
+}
+
 @end

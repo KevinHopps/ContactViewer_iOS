@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface CVContact : NSObject
+@interface CVContact : NSObject <NSCoding>
 
 @property(strong) NSString* name;
 @property(strong) NSString* phone;
@@ -22,5 +22,9 @@
          andTitle:(NSString*)title
          andEmail:(NSString*)email
      andTwitterId:(NSString*)twitterId;
+
+-(void)encodeWithCoder:(NSCoder *)aCoder;
+
+-(id)initWithCoder:(NSCoder *)aDecoder;
 
 @end

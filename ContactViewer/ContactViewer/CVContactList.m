@@ -14,6 +14,7 @@ static CVContactList* _singleton = nil;
 
 +(void)initSingleton {
     _singleton = [[CVContactList alloc] initWithCapacity:4];
+    /*
     
     [_singleton addContact:[[CVContact alloc] initWithName:@"Malcom Reynolds"
                                                 andPhone:@"612-555-1234"
@@ -55,6 +56,7 @@ static CVContactList* _singleton = nil;
                                                 andTitle:@"Shepherd"
                                                 andEmail:@"shepherd@serenity.com"
                                                 andTwitterId:@"shepherdbook"]];
+     */
 }
 
 +(CVContactList*)singleton {
@@ -79,6 +81,22 @@ static CVContactList* _singleton = nil;
 
 -(void)addContact:(CVContact *)contact {
     [self.allContacts addObject:contact];
+}
+
+-(void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.allContacts forKey:@"allContacts"];
+}
+
+-(id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self)
+    {
+        self.allContacts = [aDecoder decodeObjectForKey:@"allContacts"];
+    }
+    
+    return self;
 }
 
 @end

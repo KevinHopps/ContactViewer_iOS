@@ -35,6 +35,8 @@
         [CVContactList initSingleton];
         contacts = [CVContactList singleton];
         
+        [self loadContacts];
+        
         selectedItem = -1;
         
     }
@@ -65,6 +67,29 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (NSString*)getStoragePath
+{
+    NSString* filename = @"contacts.json";
+    NSString* filepath = [[NSBundle mainBundle] pathForResource: filename ofType:@""];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString* docsPath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSString* outputPath = [docsPath stringByAppendingPathComponent:filename ];
+    
+    return outputPath;
+}
+
+- (void)storeContacts
+{
+    NSString* outputPath = [self getStoragePath];
+    [NSKeyedArchiver archiveRootObject:contacts toFile:outputPath];
+}
+
+- (void)loadContacts
+{
+    NSString* outputPath = [self getStoragePath];
+    contacts = [NSKeyedUnarchiver unarchiveObjectWithFile:outputPath];
 }
 
 - (void)insertNewObject:(id)sender
