@@ -13,7 +13,7 @@
 #import "CVContactList.h"
 
 @interface CVMasterViewController () {
-    NSMutableArray *_objects;
+    NSInteger selectedItem;
 }
 @end
 
@@ -35,6 +35,8 @@
         [CVContactList initSingleton];
         contacts = [CVContactList singleton];
         
+        selectedItem = -1;
+        
     }
     return self;
 }
@@ -49,6 +51,16 @@
     self.navigationItem.rightBarButtonItem = addButton;
 }
 
+// This is called when the detail view is popped.
+// Since a contact has been updated, we must reload the view's data.
+// There might be a way to be smart about this, but for now we just
+// reload the entire view's data.
+//
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self.tableView reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -57,11 +69,14 @@
 
 - (void)insertNewObject:(id)sender
 {
-    if (!_objects) {
-        _objects = [[NSMutableArray alloc] init];
-    }
-    [_objects insertObject:[NSDate date] atIndex:0];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+//    if (!_objects) {
+//        _objects = [[NSMutableArray alloc] init];
+//    }
+//    [_objects insertObject:[NSDate date] atIndex:0];
+    CVContact* contact = [[CVContact alloc] initWithName:@"Name" andPhone:@"Phone" andTitle:@"Title" andEmail:@"email" andTwitterId:@"TwitteriD"];
+    NSInteger row = contacts.count;
+    [contacts addContact:contact];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
@@ -84,7 +99,7 @@
     
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
         if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
             cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
         }
@@ -93,6 +108,10 @@
 
     CVContact* contact = [contacts contactAtIndex:indexPath.row];
     cell.textLabel.text = contact.name;
+    // this is a bit of a hack, but now we don't need to make a custom cell item
+    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@            %@",
+                                 contact.phone, contact.title];
+
     return cell;
 }
 
@@ -105,7 +124,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-        [_objects removeObjectAtIndex:indexPath.row];
+//      [_objects removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
@@ -130,15 +149,16 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDate *object = _objects[indexPath.row];
+    CVContact* contact = [contacts contactAtIndex:indexPath.row];
+    selectedItem = indexPath.row;
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
 	    if (!self.detailViewController) {
 	        self.detailViewController = [[CVDetailViewController alloc] initWithNibName:@"CVDetailViewController_iPhone" bundle:nil];
 	    }
-	    self.detailViewController.detailItem = object;
+	    self.detailViewController.detailItem = contact;
         [self.navigationController pushViewController:self.detailViewController animated:YES];
     } else {
-        self.detailViewController.detailItem = object;
+        self.detailViewController.detailItem = contact;
     }
 }
 

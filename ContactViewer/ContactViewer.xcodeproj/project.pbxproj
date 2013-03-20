@@ -24,6 +24,8 @@
 		812FABDE16EB977A00BAB6C3 /* CVDetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812FABDC16EB977A00BAB6C3 /* CVDetailViewController_iPad.xib */; };
 		812FABE616EB990100BAB6C3 /* CVContactList.m in Sources */ = {isa = PBXBuildFile; fileRef = 812FABE516EB990100BAB6C3 /* CVContactList.m */; };
 		812FABE916EB997A00BAB6C3 /* CVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = 812FABE816EB997A00BAB6C3 /* CVContact.m */; };
+		81446D4016F810B1008E06D8 /* CVEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81446D3E16F810B1008E06D8 /* CVEditViewController.m */; };
+		81446D4116F810B1008E06D8 /* CVEditViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81446D3F16F810B1008E06D8 /* CVEditViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,9 @@
 		812FABE516EB990100BAB6C3 /* CVContactList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVContactList.m; sourceTree = "<group>"; };
 		812FABE716EB997900BAB6C3 /* CVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVContact.h; sourceTree = "<group>"; };
 		812FABE816EB997A00BAB6C3 /* CVContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVContact.m; sourceTree = "<group>"; };
+		81446D3D16F810B1008E06D8 /* CVEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVEditViewController.h; sourceTree = "<group>"; };
+		81446D3E16F810B1008E06D8 /* CVEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVEditViewController.m; sourceTree = "<group>"; };
+		81446D3F16F810B1008E06D8 /* CVEditViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CVEditViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,6 +118,9 @@
 				812FABBC16EB977A00BAB6C3 /* Supporting Files */,
 				812FABE416EB990100BAB6C3 /* CVContactList.h */,
 				812FABE516EB990100BAB6C3 /* CVContactList.m */,
+				81446D3D16F810B1008E06D8 /* CVEditViewController.h */,
+				81446D3E16F810B1008E06D8 /* CVEditViewController.m */,
+				81446D3F16F810B1008E06D8 /* CVEditViewController.xib */,
 			);
 			path = ContactViewer;
 			sourceTree = "<group>";
@@ -191,6 +199,7 @@
 				812FABD816EB977A00BAB6C3 /* CVMasterViewController_iPad.xib in Resources */,
 				812FABDB16EB977A00BAB6C3 /* CVDetailViewController_iPhone.xib in Resources */,
 				812FABDE16EB977A00BAB6C3 /* CVDetailViewController_iPad.xib in Resources */,
+				81446D4116F810B1008E06D8 /* CVEditViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -207,6 +216,7 @@
 				812FABD216EB977A00BAB6C3 /* CVDetailViewController.m in Sources */,
 				812FABE616EB990100BAB6C3 /* CVContactList.m in Sources */,
 				812FABE916EB997A00BAB6C3 /* CVContact.m in Sources */,
+				81446D4016F810B1008E06D8 /* CVEditViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -355,6 +365,7 @@
 				812FABE316EB977A00BAB6C3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
