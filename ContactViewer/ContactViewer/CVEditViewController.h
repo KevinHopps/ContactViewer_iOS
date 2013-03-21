@@ -12,6 +12,7 @@
 @interface CVEditViewController : UIViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) CVContact* contact;
+@property (strong, nonatomic) CVContact* original;
 @property (weak, nonatomic) IBOutlet UITextField *nameData;
 @property (weak, nonatomic) IBOutlet UITextField *titleData;
 @property (weak, nonatomic) IBOutlet UITextField *phoneData;

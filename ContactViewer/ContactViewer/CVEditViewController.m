@@ -9,6 +9,9 @@
 #import "CVEditViewController.h"
 
 @interface CVEditViewController ()
+{
+    BOOL canceled;
+}
 
 @end
 
@@ -19,19 +22,65 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         [self registerForKeyboardNotifications];
+        self.title = NSLocalizedString(@"Edit", @"Edit");
+        self.original = [[CVContact alloc] initWithName:@"" andPhone:@"" andTitle:@"" andEmail:@"" andTwitterId:@""];
+        //[self.navigationItem.leftBarButtonItem setAction:@selector(saveItems:)];
+        canceled = NO;
     }
     return self;
+}
+
+-(void) saveItems:(id)sender
+{
+	self.contact.name = self.nameData.text;
+	self.contact.title = self.titleData.text;
+	self.contact.phone = self.phoneData.text;
+	self.contact.email = self.emailData.text;
+	self.contact.twitterId = self.twitterIDData.text;
+    
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(doCancel)];
+    self.navigationItem.rightBarButtonItem = cancelButton;
+
     self.nameData.delegate = self;
     self.titleData.delegate = self;
     self.phoneData.delegate = self;
     self.emailData.delegate = self;
     self.twitterIDData.delegate = self;
+    
+    [self loadFromContact];
+    
+}
+
+-(void)doCancel
+{
+    self.contact.name = self.original.name;
+    self.contact.title = self.original.title;
+    self.contact.phone = self.original.phone;
+    self.contact.email = self.original.email;
+    self.contact.twitterId = self.original.twitterId;
+    
+    canceled = YES;
+    self.contact.isNew = YES;
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [self loadFromContact];
+}
+
+- (void)loadFromContact
+{
+    canceled = NO;
+    self.contact.isNew = NO;
     
     self.nameData.text = self.contact.name;
     self.titleData.text = self.contact.title;
@@ -39,6 +88,11 @@
     self.emailData.text = self.contact.email;
     self.twitterIDData.text = self.contact.twitterId;
     
+    self.original.name = self.contact.name;
+    self.original.title = self.contact.title;
+    self.original.phone = self.contact.phone;
+    self.original.email = self.contact.email;
+    self.original.twitterId = self.contact.twitterId;
 }
 
 - (void)didReceiveMemoryWarning
@@ -63,17 +117,21 @@
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     //[self animateTextField: textField up: NO];
-    if (textField == self.nameData)
-        self.contact.name = textField.text;
-    else if (textField == self.titleData)
-        self.contact.title = textField.text;
-    else if (textField == self.phoneData)
-        self.contact.phone = textField.text;
-    else if (textField == self.emailData)
-        self.contact.email = textField.text;
-    else if (textField == self.twitterIDData)
-        self.contact.twitterId = textField.text;
-    
+
+    if (!canceled)
+    {
+        if (textField == self.nameData)
+            self.contact.name = textField.text;
+        else if (textField == self.titleData)
+            self.contact.title = textField.text;
+        else if (textField == self.phoneData)
+            self.contact.phone = textField.text;
+        else if (textField == self.emailData)
+            self.contact.email = textField.text;
+        else if (textField == self.twitterIDData)
+            self.contact.twitterId = textField.text;        
+    }
+
     self.activeField = nil;
 }
 

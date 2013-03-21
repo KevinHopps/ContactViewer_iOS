@@ -60,7 +60,21 @@
 //
 - (void)viewDidAppear:(BOOL)animated
 {
+    [self checkLastItem];
     [self.tableView reloadData];
+}
+
+-(void) checkLastItem
+{
+    NSInteger last = self.contacts.count - 1;
+    if (last >= 0)
+    {
+        CVContact* contact = [self.contacts contactAtIndex:last];
+        if (contact.isNew)
+        {
+            [self.contacts.allContacts removeObjectAtIndex:last];
+        }
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -82,6 +96,7 @@
 
 - (void)storeContacts
 {
+    [self checkLastItem];
     NSString* outputPath = [self getStoragePath];
     [NSKeyedArchiver archiveRootObject:contacts toFile:outputPath];
 }
@@ -94,15 +109,23 @@
 
 - (void)insertNewObject:(id)sender
 {
-//    if (!_objects) {
-//        _objects = [[NSMutableArray alloc] init];
-//    }
-//    [_objects insertObject:[NSDate date] atIndex:0];
-    CVContact* contact = [[CVContact alloc] initWithName:@"Name" andPhone:@"Phone" andTitle:@"Title" andEmail:@"email" andTwitterId:@"TwitteriD"];
+    CVContact* contact = [[CVContact alloc] initWithName:@"" andPhone:@"" andTitle:@"" andEmail:@"" andTwitterId:@""];
     NSInteger row = contacts.count;
     [contacts addContact:contact];
     NSIndexPath *indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     [self.tableView insertRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+
+    CVEditViewController* editViewController = [[CVEditViewController alloc] initWithNibName:@"CVEditViewController" bundle:nil];
+    editViewController.contact = contact;
+    [self.navigationController pushViewController:editViewController animated:YES];
+    /*
+    if (!self.editViewController)
+    {
+        self.editViewController = [[CVEditViewController alloc] initWithNibName:@"CVEditViewController" bundle:nil];
+    }
+    self.editViewController.contact = self.contact;
+    [self.navigationController pushViewController:self.editViewController animated:YES];
+     */
 }
 
 #pragma mark - Table View
@@ -149,7 +172,7 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
-//      [_objects removeObjectAtIndex:indexPath.row];
+        [contacts.allContacts removeObjectAtIndex:indexPath.row];
         [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.

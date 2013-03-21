@@ -16,6 +16,7 @@
 @property(strong) NSString* email;
 @property(strong) NSString* twitterId;
 
+@property BOOL isNew;
 
 -(id)initWithName:(NSString*)name
          andPhone:(NSString*)phone

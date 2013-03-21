@@ -24,6 +24,8 @@
     self.email = email;
     self.twitterId = twitterId;
     
+    self.isNew = YES;
+    
     return self;    
 }
 
@@ -46,6 +48,7 @@
         self.title = [aDecoder decodeObjectForKey:@"title"];
         self.email = [aDecoder decodeObjectForKey:@"email"];
         self.twitterId = [aDecoder decodeObjectForKey:@"twitterId"];
+        self.isNew = NO;
     }
     
     return self;
