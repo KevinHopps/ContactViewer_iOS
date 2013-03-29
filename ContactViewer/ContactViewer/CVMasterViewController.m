@@ -31,10 +31,6 @@
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
         
-        // get the contact list
-        [CVContactList initSingleton];
-        contacts = [CVContactList singleton];
-        
         [self loadContacts];
         
         selectedItem = -1;
@@ -105,6 +101,8 @@
 {
     NSString* outputPath = [self getStoragePath];
     contacts = [NSKeyedUnarchiver unarchiveObjectWithFile:outputPath];
+    if (contacts == nil)
+        contacts = [[CVContactList alloc] initWithCapacity:10];
 }
 
 - (void)insertNewObject:(id)sender

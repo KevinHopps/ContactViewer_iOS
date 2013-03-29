@@ -8,13 +8,11 @@
 
 #import "CVContactList.h"
 
-static CVContactList* _singleton = nil;
-
 @implementation CVContactList
 
+/*
 +(void)initSingleton {
     _singleton = [[CVContactList alloc] initWithCapacity:4];
-    /*
     
     [_singleton addContact:[[CVContact alloc] initWithName:@"Malcom Reynolds"
                                                 andPhone:@"612-555-1234"
@@ -56,12 +54,8 @@ static CVContactList* _singleton = nil;
                                                 andTitle:@"Shepherd"
                                                 andEmail:@"shepherd@serenity.com"
                                                 andTwitterId:@"shepherdbook"]];
-     */
 }
-
-+(CVContactList*)singleton {
-    return _singleton;
-}
+ */
 
 -(id)initWithCapacity:(NSInteger)capacity {
     self = [super init];

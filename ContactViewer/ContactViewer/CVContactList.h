@@ -11,10 +11,6 @@
 
 @interface CVContactList : NSObject <NSCoding>
 
-+(void)initSingleton;
-
-+(CVContactList*)singleton;
-
 -(id)initWithCapacity:(NSInteger)capacity;
 
 -(NSInteger)count;
